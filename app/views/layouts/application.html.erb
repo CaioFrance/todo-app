@@ -10,43 +10,100 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-      <div class="container-fluid">
-        <%= link_to 'Todo Application', root_path, class: "navbar-brand" %>
-        <div class="collapse navbar-collapse">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li>
-              <%= link_to 'Home', root_path, class:'nav-link' %>
-            </li>
+  <body class="bg-light container-fluid">
 
-            <% unless user_signed_in? %>
-              <li>
-                <%= link_to 'Sobre', about_index_path, class:'nav-link' %>
-              </li>
-            <% else %>
-              <li>
-                <%= link_to 'Listas', root_path, class:'nav-link' %>
-              </li>
-              <li>
-                <%= link_to 'Sobre', root_path, class:'nav-link' %>
-              </li>
+    <main class="row min-vh-100">
+
+      <div class="d-flex flex-column p-2 shadow col-md-2" id="sidebar">
+
+        <%= link_to 'Todo Application', root_path, class: "d-flex align-items-center fs-4 p-2 text-decoration-none text-light" %>
+
+        <hr class="text-light m-2">
+
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li class="nav-item">
+            <%= link_to root_path, class:'text-decoration-none fs-5 link-light p-2' do %>
+              <i class="fas fa-home"></i>
+              <span>Home</span>
             <% end %>
-          </ul>
-    
-          <%= link_to 'Registrar', new_user_registration_path, class:'text-warning text-decoration-none btn btn-link' %>
+          </li>
+          
+        <% unless user_signed_in? %>
 
-          <%= link_to user_session_path, class: "" do %>
-            <div class="btn btn-outline-success">
+          <li>
+            <%= link_to about_index_path, class:'link-light fs-5 text-decoration-none p-2' do %>
+              <i class="far fa-question-circle fs-5"></i>
+              <span>Sobre</span>
+            <% end %>
+          </li>
+
+        <% else %>
+          
+          <li>
+            <%= link_to lists_path, class:'link-light fs-5 text-decoration-none p-2' do %>
+              <i class="fas fa-tasks fs-5"></i>
+              <span>Listas</span>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to about_index_path, class:'link-light fs-5 text-decoration-none p-2' do %>
+              <i class="far fa-question-circle fs-5"></i>
+              <span>Sobre</span>
+            <% end %>
+          </li>
+          
+        <% end %>
+          
+        </ul> 
+
+        <hr class="text-light">
+
+        <% unless user_signed_in? %>
+
+          <div class="d-flex justify-content-between">
+
+            <%= link_to user_session_path, class: "" do %>
+            <div class="btn btn-success">
               <i class="far fa-user" style="width: 3vh;"></i>
             </div>
-          <% end %>
+            <% end %>
+              
+            <%= link_to 'Registrar', new_user_registration_path, class:'p-1 pb-2 text-decoration-none btn btn-warning' %>
 
-        </div> 
+          </div>  
+            
+        <% else %>
+            
+          <div class="dropup p-2">
+            
+            <%= link_to '', class: "d-flex align-items-center text-white text-decoration-none dropdown-toggle fs-5", 'data-bs-toggle': "dropdown" do %>
+              <%= image_tag 'user_male.svg', class: "w-25" %>
+              <span class="px-2"><%= current_user.name %></span>
+            <% end %>
+        
+            <ul class="dropdown-menu dropdown-menu-dark shadow">
+              <li>
+                <%= link_to 'Minha Conta', edit_user_registration_path, class: "dropdown-item" %>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <%= link_to destroy_user_session_path, method: :delete,  class: "dropdown-item" do %>
+                    <i class="fas fa-sign-out-alt"></i>
+                <% end %>
+              </li>
+            </ul>
+
+          </div>
+      
+        <% end %>
+
       </div>
-    </nav>
-    <div class="container">
-      <%= yield %>
-    </div>
+
+      <div class="col-md-10">
+        <%= yield %>
+      </div>
+
+    </main>
   </body>
 </html>
+    

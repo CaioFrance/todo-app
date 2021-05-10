@@ -1,14 +1,102 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @list.title %>
-</p>
+<div class="card mt-5">
 
-<p>
-  <strong>User:</strong>
-  <%= @list.user_id %>
-</p>
+  <div class="card-header d-flex justify-content-between align-items-center ">
+    
+    <h5 class="m-0">
+      <%= link_to lists_path, class: "text-decoration-none pe-2 text-dark" do %>
+        <i class="fas fa-chevron-left pe-2"></i>
+        <%= @list.title %>
+      <% end %>
+    </h5>
+    <p class="text-secondary m-0"><%= @list.percent_complete %>% Completo
+      (<%= @list.completed_items %>/<%= @list.total_items %> Itens)</p>
+      
+      <div>
+        <%= link_to "Editar Lista", edit_list_path(@list), class: "btn btn-secondary btn-sm" %>
+      </div>
+      
+  </div>
+    
+    <div class="card-body">
 
-<%= link_to 'Edit', edit_list_path(@list) %> |
-<%= link_to 'Back', lists_path %>
+      <div class="progress mb-4">
+        <div class="progress-bar" role="progressbar" style="width: <%= @list.percent_complete %>% " 
+        aria-valuenow="<%= @list.percent_complete %>" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      
+      <%= form_with(model: [@item.list, @item]) do |f| %>
+      
+      <div class="input-group mb-3">
+        
+        <%= f.text_field :description, class: "form-control", placeholder: "Add a new Item" %>
+        
+        <%= f.hidden_field :completed, value: false %>
+
+        <%= f.hidden_field :completed_at, value: Time.now %>
+        
+        <div class="input-group-append">
+          
+          <%= f.submit "Adicionar", class: "input-group-btn btn btn-outline-primary" %>
+          
+        </div>
+        
+      </div>
+      
+      <% end %>
+      
+      <ul class="list-group">
+        
+        <% @list.items.order('created_at desc').each do |item| %>
+          
+          <% if item.id? %>
+          
+            <li class="list-group-item">
+              
+              <div class="d-flex justify-content-between align-items-center">
+                
+                <span>
+                  <%= item.description %>
+                </span>
+                
+                <% if item.completed? %>
+                
+                  <div class="mx-2">
+
+                    <%= link_to '#', class: "btn btn-success mx-2 btn-sm", data: { reflex: "click->Item#complete", id: item.id }  do %>
+                      <i class="fas fa-check"></i>
+                    <% end %>
+                    <%= link_to [item.list, item], method: :delete, class: "btn btn-danger btn-sm"  do %>
+                      <i class="fas fa-times"></i>
+                    <% end %>
+                    
+                  </div>
+
+                <% else %>
+                  
+                  <div class="mx-2">
+
+                    <%= link_to '#', class: "btn btn-secondary mx-2 btn-sm", data: { reflex: "click->Item#incomplete", id: item.id }  do %>
+                      <i class="fas fa-redo"></i>
+                    <% end %>
+                    <%= link_to [item.list, item], method: :delete, class: "btn btn-danger btn-sm", redirect: list_path  do %>
+                      <i class="fas fa-times"></i>
+                    <% end %>
+                    
+                  </div>
+
+                <% end %>
+                
+              </div>
+              
+            </li>
+          
+          <% end %>
+        
+        <% end %>
+          
+      </ul>
+      
+    </div>
+    
+</div>
