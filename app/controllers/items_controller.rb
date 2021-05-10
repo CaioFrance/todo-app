@@ -33,7 +33,7 @@ class ItemsController < ApplicationController
 
   # PUT lists/1/items/1
   def update
-    if @item.update_attributes(item_params)
+    if @item.update(item_params)
       redirect_to([@item.list, @item], notice: 'Item was successfully updated.')
     else
       render action: 'edit'
@@ -44,7 +44,7 @@ class ItemsController < ApplicationController
   def destroy
     @item.destroy
 
-    redirect_to list_items_url(@list)
+    redirect_to list_path(@list)
   end
 
   private
