@@ -1,8 +1,10 @@
-<h2 class="text-center">Registrar</h2>
-
-<div class="row p-sm-2">
+<div class="p-sm-3">
   
-  <div class="col">
+  <div class="d-flex flex-column">
+
+    <div class="d-flex justify-content-center">
+      <%= image_tag "notes.svg", alt: "Notes", class: "img-fluid pt-3", width: "35%" %>
+    </div>
     
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
@@ -37,8 +39,6 @@
       
   </div>
 
-  <div class="col">
-    <%= image_tag "notes.svg", alt: "Notes", class: "img-fluid m-2" %>
-  </div>
+  
 
 </div>

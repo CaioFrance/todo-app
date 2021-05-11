@@ -1,10 +1,21 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<div class="p-2 min-vh-100">
+    <% if user_signed_in? %>
+        <h2 class="text-center">Bem vindo, <%= @user.name %>!!!</h2>
 
-<% if user_signed_in? %>
-    <% @user.lists.each do |item| %>
-        <%= item.title %><br>
+        <hr>
+
+        <p>Atualmente possuímos <%= User.all.count %> usuários. Agradecemos a sua colaboração 😁!</p>
+    
+    <% else %>
+        <div class="text-center">
+            <h2>Bem vindo</h2>
+            <h3>Crie sua conta e comece a criar suas listas 😁!!</h3>
+        </div>
+
+        <hr>
+
+        <p>Atualmente possuímos <%= User.all.count %> usuários, venha fazer parte do time você também!!</p>
+        <p>Você pode clicar aqui para fazer seu cadastro! <%= link_to 'Registrar', new_user_registration_path, class:'btn-link' %> </p>
+    
     <% end %>
-
-    <%= @user.name %>
-<% end %>
+</div>

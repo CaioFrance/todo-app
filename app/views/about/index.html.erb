@@ -1,2 +1,25 @@
-<h1>About#index</h1>
-<p>Find me in app/views/about/index.html.erb</p>
+<div class="d-flex flex-column justify-content-between min-vh-100">
+
+    <div class="text-center px-2">
+        <h1>Sobre</h1>
+        
+        <em>
+            Está aplicação tem como objetivo aperfeiçoar os conhecimentos em Ruby on Rails.
+        </em>
+        
+        <hr>
+        
+        <h3>Conceito da aplicação</h3>
+        
+        <p class="text-start ">
+            <span class="ms-5">Faça suas anotações,</span> listas de compras, listas de estudos e use-a para melhoras sua peformance,
+            está aplicação é tudo o que você precisa para aumentar a sua produtividade no dia-a-dia.
+        </p>
+    </div>
+    
+    <footer class="d-flex card align-items-end">
+        <div class="card-body disable">
+            &copy; <%= link_to 'Caio Francelino', 'https://github.com/CaioFrance', class: "text-dark" %> / <%= year %>
+        </div>
+    </footer>
+</div>
